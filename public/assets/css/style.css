@@ -1,0 +1,210 @@
+
+
+
+   /* register css */
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+.register-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 480px;
+  max-height: 650px;     /* थोड़ा बड़ा रखा */
+       /* जरूरत पड़ने पर scrollbar आए */
+  animation: fadeSlideIn 0.8s ease forwards;
+}
+
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+  .register-title {
+  font-weight: 700;
+  font-size: 1.75rem;  /* heading छोटा किया */
+  margin-bottom: 1rem; /* margin कम किया */
+  text-align: center;
+  letter-spacing: 1.2px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+    label {
+      color: #ddd;
+      font-weight: 600;
+    }
+
+ .form-control {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  font-size: 1rem;  /* font size कम किया */
+  box-shadow: none;
+  transition: background 0.3s ease;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem; /* padding कम किया */
+}
+    .form-control:focus {
+      background: rgba(255,255,255,0.35);
+      color: #222;
+      outline: none;
+      box-shadow: 0 0 8px 2px #9f7aea;
+    }
+
+    .btn-primary {
+      background: #805ad5;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(128, 90, 213, 0.5);
+    }
+    .btn-primary:hover {
+      background: #6b46c1;
+      box-shadow: 0 6px 20px rgba(107, 70, 193, 0.7);
+    }
+
+    .alert-danger {
+      background: rgba(255, 69, 96, 0.9);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 3px 10px rgba(255, 69, 96, 0.5);
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+
+    /* end register css  */
+
+/*   login css */
+body {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      padding: 2.5rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 420px;
+      animation: fadeSlideIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-title {
+      font-weight: 700;
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 1.2px;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    label {
+      color: #ddd;
+      font-weight: 600;
+    }
+
+    .form-control {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      font-size: 1.1rem;
+      box-shadow: none;
+      transition: background 0.3s ease;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+    .form-control:focus {
+      background: rgba(255,255,255,0.35);
+      color: #222;
+      outline: none;
+      box-shadow: 0 0 8px 2px #9f7aea;
+    }
+
+    .btn-primary {
+      background: #805ad5;
+      border: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(128, 90, 213, 0.5);
+    }
+    .btn-primary:hover {
+      background: #6b46c1;
+      box-shadow: 0 6px 20px rgba(107, 70, 193, 0.7);
+    }
+
+    .alert-danger {
+      background: rgba(255, 69, 96, 0.9);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 3px 10px rgba(255, 69, 96, 0.5);
+      animation: shake 0.4s ease;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-10px); }
+      40%, 80% { transform: translateX(10px); }
+    }
+     .custom-hover:hover {
+  color: #f8f9fa !important; /* light white color */
+}
+    /* end login css */

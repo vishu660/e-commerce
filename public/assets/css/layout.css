@@ -1,0 +1,53 @@
+ /* Header styling */
+    header {
+      background-color: white;
+      animation: slideDown 0.6s ease-in-out;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      display: block;
+      clear: both;
+    }
+
+    @keyframes slideDown {
+      0% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #000 !important;
+    }
+
+    .nav-link {
+      color: #000 !important;
+    }
+
+    .search-icon-end {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      color: #6c757d;
+      cursor: pointer;
+    }
+
+    .form-control {
+      padding-left: 2.5rem;
+    }
+
+    footer {
+      float: none !important;
+      width: 100%;
+      clear: both;
+      display: block;
+    }
+
+
+   /* end header css */
