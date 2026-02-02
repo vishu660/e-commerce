@@ -63,3 +63,31 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+Route::get('/admin', function () { return view('admin.dashboard');})->name('admin.dashboard');
+
+Route::get('/layouts', function () { return view('layouts.layout');})->name('layouts');  
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('admin/orders', function () {
+    return view('admin.orders.index');
+})->name('orders.index');
+
+Route::get('admin/products', function () {
+    return view('admin.products.index');
+})->name('product.index');
+
+
+Route::get('/customers', function () {
+    return view('customer.index');
+})->name('customers.index');
+
+Route::get('/analytics', function () {
+    return view('analytic.index');
+})->name('analytics');
+
+Route::get('/settings', function () {
+    return view('settings.index');
+})->name('settings');
