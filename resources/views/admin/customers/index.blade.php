@@ -1,7 +1,7 @@
 @extends('admin.layouts.layout')
 
-@section('title', 'Orders')
-@section('page-title', 'Orders')
+@section('title', 'Customers')
+@section('page-title', 'Customers')
 
 @section('content')
 
@@ -9,19 +9,19 @@
 
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0">All Orders</h4>
-        <button class="btn btn-outline-primary">
-            <i class="fas fa-download me-1"></i> Export Orders
+        <h4 class="mb-0">All Customers</h4>
+        <button class="btn btn-primary">
+            <i class="fas fa-user-plus me-1"></i> Add Customer
         </button>
     </div>
 
-    <!-- Order Stats -->
+    <!-- Customer Stats -->
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-muted">Total Orders</h6>
-                    <h3>245</h3>
+                    <h6 class="text-muted">Total Customers</h6>
+                    <h3>1,284</h3>
                 </div>
             </div>
         </div>
@@ -29,8 +29,8 @@
         <div class="col-md-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-muted">Pending Orders</h6>
-                    <h3 class="text-warning">32</h3>
+                    <h6 class="text-muted">Active Customers</h6>
+                    <h3 class="text-success">1,050</h3>
                 </div>
             </div>
         </div>
@@ -38,8 +38,8 @@
         <div class="col-md-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-muted">Completed Orders</h6>
-                    <h3 class="text-success">187</h3>
+                    <h6 class="text-muted">Inactive Customers</h6>
+                    <h3 class="text-danger">234</h3>
                 </div>
             </div>
         </div>
@@ -47,14 +47,14 @@
         <div class="col-md-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-muted">Cancelled Orders</h6>
-                    <h3 class="text-danger">26</h3>
+                    <h6 class="text-muted">New This Month</h6>
+                    <h3 class="text-primary">86</h3>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Orders Table -->
+    <!-- Customers Table -->
     <div class="card border-0 shadow-sm">
         <div class="card-body">
 
@@ -62,71 +62,78 @@
                 <table class="table align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>#Order ID</th>
+                            <th>#</th>
                             <th>Customer</th>
-                            <th>Products</th>
-                            <th>Total</th>
-                            <th>Payment</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Total Orders</th>
+                            <th>Total Spent</th>
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Joined</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr>
-                            <td>#ORD-1001</td>
+                            <td>1</td>
                             <td>
-                                <strong>Rahul Sharma</strong><br>
-                                <small class="text-muted">rahul@gmail.com</small>
+                                <img src="https://i.pravatar.cc/40?img=1" class="rounded-circle me-2">
+                                <strong>Rahul Sharma</strong>
                             </td>
-                            <td>3 Items</td>
-                            <td>₹4,299</td>
-                            <td><span class="badge bg-success">Paid</span></td>
-                            <td><span class="badge bg-warning">Pending</span></td>
-                            <td>25 Jan 2026</td>
+                            <td>rahul@gmail.com</td>
+                            <td>+91 98765 43210</td>
+                            <td>12</td>
+                            <td>₹2,45,000</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>12 Jan 2026</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="btn btn-sm btn-outline-success">
-                                    <i class="fas fa-check"></i>
+                                <button class="btn btn-sm btn-outline-warning">
+                                    <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-times"></i>
+                                    <i class="fas fa-ban"></i>
                                 </button>
                             </td>
                         </tr>
 
                         <tr>
-                            <td>#ORD-1002</td>
+                            <td>2</td>
                             <td>
-                                <strong>Neha Verma</strong><br>
-                                <small class="text-muted">neha@gmail.com</small>
+                                <img src="https://i.pravatar.cc/40?img=2" class="rounded-circle me-2">
+                                <strong>Neha Verma</strong>
                             </td>
-                            <td>1 Item</td>
-                            <td>₹1,29,999</td>
-                            <td><span class="badge bg-success">Paid</span></td>
-                            <td><span class="badge bg-success">Completed</span></td>
-                            <td>24 Jan 2026</td>
+                            <td>neha@gmail.com</td>
+                            <td>+91 91234 56789</td>
+                            <td>5</td>
+                            <td>₹89,999</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>08 Jan 2026</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i>
                                 </button>
+                                <button class="btn btn-sm btn-outline-warning">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </td>
                         </tr>
 
                         <tr>
-                            <td>#ORD-1003</td>
+                            <td>3</td>
                             <td>
-                                <strong>Amit Kumar</strong><br>
-                                <small class="text-muted">amit@gmail.com</small>
+                                <img src="https://i.pravatar.cc/40?img=3" class="rounded-circle me-2">
+                                <strong>Amit Kumar</strong>
                             </td>
-                            <td>2 Items</td>
+                            <td>amit@gmail.com</td>
+                            <td>+91 99887 66554</td>
+                            <td>1</td>
                             <td>₹5,499</td>
-                            <td><span class="badge bg-danger">Unpaid</span></td>
-                            <td><span class="badge bg-danger">Cancelled</span></td>
-                            <td>23 Jan 2026</td>
+                            <td><span class="badge bg-danger">Inactive</span></td>
+                            <td>30 Dec 2025</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i>
