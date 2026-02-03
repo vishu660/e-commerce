@@ -75,29 +75,28 @@
                     </thead>
 
                     <tbody>
-                        @foreach($product as $products)
+                        @foreach($products as $product)
                         <tr>
-                            <td>{{$products->id}}</td>
+                            <td>{{$product->id}}</td>
                             <td>
-                            @if($products->gallery)
-                                <img src="{{ asset('storage/' . $products->gallery) }}" alt="Product Image">                            @else
+                            @if($product->gallery)
+                                <img src="{{ asset('storage/' . $product->gallery) }}" alt="Product Image">                            @else
                                 No Image
                             @endif
                             </td>
                             <td>
-                                <strong>{{$products->name}}</strong><br>
+                                <strong>{{$product->name}}</strong><br>
                             </td>
-                            <td>{{$products->category}}</td>
-                            <td>{{$products->price}}</td>
-                            <td>{{$products->discount}}</td>
-                            <td>{{$products->description}}</td>
+                            <td>{{$product->category}}</td>
+                            <td>{{$product->price}}</td>
+                            <td>{{$product->discount}}</td>
+                            <td>{{$product->description}}</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <a href="{{route('product.edit', $product->id)}}" class="btn btn-sm btn-outline-warning">
-        
-                                    <i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">
+                                     <i class="fas fa-edit"></i></a>
                                 <button class="btn btn-sm btn-outline-danger">
                                     <i class="fas fa-trash"></i>
                                 </button>

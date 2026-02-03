@@ -97,4 +97,4 @@ Route::get('admin/customers', function () {
 Route::get('admin/product', [AdminProductController::class, 'index'])->name('product.index');
 Route::get('admin/create', [AdminProductController::class, 'create'])->name('product.create');
 Route::post('admin/products', [AdminProductController::class, 'store'])->name('product.store');
-Route::post('products/{product}/edit', [AdminProductController::class, 'edit'])->name('product.edit');
+Route::get('products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
