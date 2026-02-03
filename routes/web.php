@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\admin\ProductController as AdminProductController;
 
 // profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile')->middleware('auth');
@@ -71,9 +72,9 @@ Route::get('admin/orders', function () {
     return view('admin.orders.index');
 })->name('orders.index');
 
-Route::get('admin/products', function () {
-    return view('admin.products.index');
-})->name('product.index');
+// Route::get('admin/products', function () {
+// return view('admin.products.index');
+// })->name('product.index');
 
 
 Route::get('admin/customers', function () {
@@ -92,3 +93,8 @@ Route::get('admin/customers', function () {
     Route::get('/admin/profile', function () {
     return view('admin.profile.index');
 })->name('admin.profile');
+
+Route::get('admin/product', [AdminProductController::class, 'index'])->name('product.index');
+Route::get('admin/create', [AdminProductController::class, 'create'])->name('product.create');
+Route::post('admin/products', [AdminProductController::class, 'store'])->name('product.store');
+Route::post('products/{product}/edit', [AdminProductController::class, 'edit'])->name('product.edit');

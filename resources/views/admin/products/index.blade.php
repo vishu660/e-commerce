@@ -11,7 +11,8 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">All Products</h4>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
-            <i class="fas fa-plus me-1"></i> Add Product
+            <i class="fas fa-plus me-1"></i> 
+            <a href="{{route('product.create')}}">Add Product</a>
         </button>
     </div>
 
@@ -67,99 +68,42 @@
                             <th>Product</th>
                             <th>Category</th>
                             <th>Price</th>
-                            <th>Status</th>
+                            <th>Discount</th>
+                            <th>Description</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        @foreach($product as $products)
                         <tr>
-                            <td>1</td>
+                            <td>{{$products->id}}</td>
                             <td>
-                                <img src="https://via.placeholder.com/60"
-                                     class="rounded"
-                                     width="60">
+                            @if($products->gallery)
+                                <img src="{{ asset('storage/' . $products->gallery) }}" alt="Product Image">                            @else
+                                No Image
+                            @endif
                             </td>
                             <td>
-                                <strong>iPhone 14 Pro</strong><br>
-                                <small class="text-muted">SKU: IP14PRO</small>
+                                <strong>{{$products->name}}</strong><br>
                             </td>
-                            <td>Mobile</td>
-                            <td>₹1,29,999</td>
-                            <td><span class="badge bg-success">Active</span></td>
+                            <td>{{$products->category}}</td>
+                            <td>{{$products->price}}</td>
+                            <td>{{$products->discount}}</td>
+                            <td>{{$products->description}}</td>
                             <td class="text-end">
                                 <button class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="btn btn-sm btn-outline-warning"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#productModal">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                                <a href="{{route('product.edit', $product->id)}}" class="btn btn-sm btn-outline-warning">
+        
+                                    <i class="fas fa-edit"></i></a>
                                 <button class="btn btn-sm btn-outline-danger">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <img src="https://via.placeholder.com/60"
-                                     class="rounded"
-                                     width="60">
-                            </td>
-                            <td>
-                                <strong>Samsung Galaxy S23</strong><br>
-                                <small class="text-muted">SKU: SGS23</small>
-                            </td>
-                            <td>Mobile</td>
-                            <td>₹89,999</td>
-                            <td><span class="badge bg-danger">Inactive</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-warning"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#productModal">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>
-                                <img src="https://via.placeholder.com/60"
-                                     class="rounded"
-                                     width="60">
-                            </td>
-                            <td>
-                                <strong>MacBook Air M2</strong><br>
-                                <small class="text-muted">SKU: MBA-M2</small>
-                            </td>
-                            <td>Laptop</td>
-                            <td>₹1,19,999</td>
-                            <td><span class="badge bg-success">Active</span></td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-warning"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#productModal">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -168,74 +112,4 @@
     </div>
 
 </div>
-
-<!-- Add / Edit Product Modal -->
-<div class="modal fade" id="productModal" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Add / Edit Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
-                <form>
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" class="form-control">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Category</label>
-                            <select class="form-select">
-                                <option>Mobile</option>
-                                <option>Laptop</option>
-                                <option>Accessories</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Price</label>
-                            <input type="number" class="form-control">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Stock</label>
-                            <input type="number" class="form-control">
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label">Status</label>
-                            <select class="form-select">
-                                <option>Active</option>
-                                <option>Inactive</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="3"></textarea>
-                        </div>
-
-                        <div class="col-md-12">
-                            <label class="form-label">Product Image</label>
-                            <input type="file" class="form-control">
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary">Save Product</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
 @endsection
