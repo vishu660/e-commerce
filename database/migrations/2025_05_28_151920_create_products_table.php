@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name',255);
             $table->decimal('price', 10, 2); 
             $table->string('category');
-            $table->decimal('discount', 8, 2)->nullable();
+            $table->integer('discount')->default(0);            
             $table->text('gallery')->nullable(); 
             $table->text('description')->nullable();
             $table->timestamps();

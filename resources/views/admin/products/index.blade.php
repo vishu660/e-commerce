@@ -10,10 +10,9 @@
     <!-- Top Actions -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="mb-0">All Products</h4>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
-            <i class="fas fa-plus me-1"></i> 
-            <a href="{{route('product.create')}}">Add Product</a>
-        </button>
+        <a href="{{route('product.create')}}" class="btn btn-primary">
+            <i class="fas fa-plus me-1"></i>
+            Add Product  </a>
     </div>
 
     <!-- Stats Cards -->
@@ -22,7 +21,7 @@
             <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <h6 class="text-muted">Total Products</h6>
-                    <h3 class="mb-0">128</h3>
+                    <h3 class="mb-0">{{$totalproducts}}</h3>
                 </div>
             </div>
         </div>
@@ -58,6 +57,11 @@
     <!-- Product Table -->
     <div class="card shadow-sm border-0">
         <div class="card-body">
+            @if (session('success'))
+                <p style="background: #2ca22cba; color: white; padding: 10px; border-radius: 5px;">
+                    {{ session('success') }}
+                </p>
+            @endif
 
             <div class="table-responsive">
                 <table class="table align-middle">
@@ -80,7 +84,7 @@
                             <td>{{$product->id}}</td>
                             <td>
                             @if($product->gallery)
-                                <img src="{{ asset('storage/' . $product->gallery) }}" alt="Product Image">                            @else
+                                <img src="{{ asset('storage/' . $product->gallery) }}" alt="Product Image" style="width: 45px;">                            @else
                                 No Image
                             @endif
                             </td>
@@ -92,14 +96,10 @@
                             <td>{{$product->discount}}</td>
                             <td>{{$product->description}}</td>
                             <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
                                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">
                                      <i class="fas fa-edit"></i></a>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <a href="{{ route('products.delete', $product->id) }}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         @endforeach

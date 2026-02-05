@@ -15,7 +15,7 @@
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div>
                         <h6 class="text-muted">Total Orders</h6>
-                        <h3 class="mb-0">1,248</h3>
+                        <h3 class="mb-0">{{ $totalorder }}</h3>
                     </div>
                     <div class="fs-2 text-primary">
                         <i class="fas fa-shopping-cart"></i>
@@ -90,28 +90,35 @@
                             </tr>
                         </thead>
                         <tbody>
+                        @foreach($order as $orders)
                             <tr>
-                                <td>#ORD-1023</td>
-                                <td>Rahul Sharma</td>
-                                <td>₹12,999</td>
-                                <td><span class="badge bg-success">Delivered</span></td>
-                                <td>10 Feb 2026</td>
+                                <td>#ORD-{{ 1000 + $orders->id }}</td>
+
+                                <td>
+                                    {{ $orders->user->name ?? 'Guest' }}
+                                </td>
+
+                                <td>
+                                    ₹{{ $orders->product->price ?? 0 }}
+                                </td>
+
+                                <td>
+                                    @if($orders->status == 'delivered')
+                                        <span class="badge bg-success">Delivered</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">
+                                            {{ ucfirst($orders->status) }}
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <td>
+                                    {{ $orders->created_at->format('d M Y') }}
+                                </td>
                             </tr>
-                            <tr>
-                                <td>#ORD-1024</td>
-                                <td>Neha Verma</td>
-                                <td>₹2,499</td>
-                                <td><span class="badge bg-warning">Pending</span></td>
-                                <td>11 Feb 2026</td>
-                            </tr>
-                            <tr>
-                                <td>#ORD-1025</td>
-                                <td>Amit Singh</td>
-                                <td>₹89,999</td>
-                                <td><span class="badge bg-info">Processing</span></td>
-                                <td>11 Feb 2026</td>
-                            </tr>
+                        @endforeach
                         </tbody>
+
                     </table>
 
                 </div>

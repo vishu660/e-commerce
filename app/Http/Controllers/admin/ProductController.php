@@ -13,7 +13,8 @@ class ProductController extends Controller
     //
     public function index(){
         $products = Product::all();
-        return view('admin.products.index',compact('products'));
+        $totalproducts = Product::count();
+        return view('admin.products.index',compact('products','totalproducts'));
     }
 
     public function create(){
@@ -27,9 +28,12 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category' => 'required|string',
             'discount' => 'nullable|numeric',
-            'descripation' => 'nullable|string',
+            'description' => 'nullable|string',
             'gallery' => 'nullable|image|max:2000',
         ]);
+
+            $data['discount'] = $data['discount'] ?? 0;
+
 
         if ($request->hasFile('gallery')) {
             $data['gallery'] = $request->file('gallery')
@@ -38,13 +42,52 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
+        return redirect()->route('product.index')->with('success', 'Product created successfully');
     }
 
 
     public function edit(Product $product)
-{
-    return view('admin.products.edit', compact('product'));
-}
+    {
+        return view('admin.products.edit', compact('product'));
+    }
+
+   public function update(Request $request, Product $product)
+    {
+        $data = $request->validate([
+            'name'        => 'required|string',
+            'price'       => 'required|numeric',
+            'category'    => 'required|string',
+            'discount'    => 'nullable|numeric',
+            'description' => 'nullable|string',
+            'gallery'     => 'nullable|image|max:2000',
+        ]);
+
+        $data['discount'] = $data['discount'] ?? 0;
+
+        if ($request->hasFile('gallery')) {
+            if ($product->gallery && \Storage::disk('public')->exists($product->gallery)) {
+                \Storage::disk('public')->delete($product->gallery);
+            }
+
+            $data['gallery'] = $request->file('gallery')->store('product_img', 'public');
+        }
+
+        $product->update($data);
+
+        return redirect()->route('product.index')->with('success', 'Product updated successfully');
+    }
+
+
+    public function destroy(Product $product)
+    {
+        if ($product->gallery && Storage::disk('public')->exists($product->gallery)) {
+            Storage::disk('public')->delete($product->gallery);
+        }
+
+        $product->delete();
+
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully');
+    }
+
 
 }

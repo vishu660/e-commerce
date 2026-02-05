@@ -39,8 +39,8 @@
       {{-- Navigation --}}
       <ul class="nav me-auto">
         <li class="nav-item"><a href="{{ route('home') }}" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="{{ route('product12') }}" class="nav-link">Mobile</a></li>
-        <li class="nav-item"><a href="{{ route('product13') }}" class="nav-link">Electronics</a></li>
+        <li class="nav-item"><a href="{{ route('products.index')}}" class="nav-link">Mobile</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">Electronics</a></li>
         <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About</a></li>
       </ul>
 

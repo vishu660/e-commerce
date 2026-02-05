@@ -1,25 +1,47 @@
 @extends('layout.layout')
 
 @section('content')
-<div class="container py-4">
-    <h2 class="py-3">Best sellers beauty products</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="container">
+    <div class="row">
 
-        @foreach ($products as $product)
-        <div class="col">
-            <div class="product-card">
-                <a href="{{ route('products.detail', $product->id) }}">
-                <img src="{{ asset($product->gallery) }}" alt="{{ $product->name }}" class="w-100 product-image mb-2">
-                </a>
-                <small class="text-muted">Sponsored</small>
-                <h6>{{ $product->name }}</h6>
-                <div class="price mb-1">₹{{ $product->price }}</div>
+        @forelse($products as $product)
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
 
-                <a href="{{ route('products.detail', $product->id) }}" class="btn btn-warning w-100">Add to cart</a>
+                    @if($product->gallery)
+                        <img src="{{ asset('storage/'.$product->gallery) }}"
+                             class="card-img-top" alt="{{ $product->name }}">
+                    @endif
+
+                    <div class="card-body">
+                        <h6 class="card-title">{{ $product->name }}</h6>
+
+                        <p class="mb-1">
+                            ₹{{ $product->price }}
+                            @if($product->discount > 0)
+                                <span class="text-success">
+                                    ({{ $product->discount }}% off)
+                                </span>
+                            @endif
+                        </p>
+
+                        <a href="{{ route('products.detail', $product->id) }}"
+                           class="btn btn-sm btn-primary">
+                            View
+                        </a>
+                    </div>
+
+                </div>
             </div>
-        </div>
-        @endforeach
+        @empty
+            <p class="text-center">No products found</p>
+        @endforelse
 
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4">
+        {{ $products->links() }}
     </div>
 </div>
 @endsection

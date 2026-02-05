@@ -21,7 +21,7 @@ class User extends Authenticatable
         'mobile',
         'email',
         'password',
+        'role',
     ];
 
-    // बाकी कोड ...
 }

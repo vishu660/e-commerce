@@ -7,94 +7,74 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
+use App\Http\Controllers\admin\OrderController as AdminOrderController;
+use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
 
-// profile routes
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile')->middleware('auth');
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/', fn () => view('home.home'))->name('home');
+Route::get('/about', fn () => view('home.about'))->name('about');
 
-// product routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('products.detail');
-Route::get('/product1', [ProductController::class, 'product1'])->name('product1');
-Route::get('/product2', [ProductController::class, 'product2'])->name('product2');
-Route::get('/product3', [ProductController::class, 'product3'])->name('product3');
-Route::get('/product4', [ProductController::class, 'product4'])->name('product4');
-Route::get('/product5', [ProductController::class, 'product5'])->name('product5');
-Route::get('/product6', [ProductController::class, 'product6'])->name('product6');
-Route::get('/product7', [ProductController::class, 'product7'])->name('product7');
-Route::get('/product8', [ProductController::class, 'product8'])->name('product8');
-Route::get('/product9', [ProductController::class, 'product9'])->name('product9');
-Route::get('/product10', [ProductController::class, 'product10'])->name('product10');
-Route::get('/product11', [ProductController::class, 'product11'])->name('product11');
-Route::get('/product12', [ProductController::class, 'product12'])->name('product12');
-Route::get('/product13', [ProductController::class, 'product13'])->name('product13');
 Route::get('/search', [ProductController::class, 'search'])->name('search');
-Route::post('/add-to-cart', [ProductController::class, 'addToCart'])->name('add-to-cart');
-Route::get('/cart', [ProductController::class, 'CartList'])->name('cart');
-Route::get('/remove/{id}', [ProductController::class, 'RemoveCart'])->name('remove');
-// Show Checkout Form
-Route::get('/ordernow', [ProductController::class, 'OrderNow'])->name('order');
-Route::get('/myorders', [ProductController::class, 'myOrders'])->name('my.orders');
 
-
-
-// Place Order (POST route)
-Route::post('/place-order', [ProductController::class, 'placeOrder'])->name('placeorder');
-Route::get('/profile', [ProductController::class, 'profileWithOrders'])->name('profile');
-
-
-Route::get('/layout', function () { return view('layout.layout');})->name('layout');  
-
-
-Route::get('/', function () { return view('home.home');})->name('home');
-
-Route::get('/about', function () { return view('home.about');})->name('about');
-
-
-Route::get('/product', function () { return view('home.product1');})->name('product');
-
-// login routes
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
-Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-
-// registration routes
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
 
-Route::get('admin/orders', function () {
-    return view('admin.orders.index');
-})->name('orders.index');
+Route::middleware(['auth', 'role:ROLE_CUSTOMER'])->group(function () {
 
-// Route::get('admin/products', function () {
-// return view('admin.products.index');
-// })->name('product.index');
+    Route::post('/add-to-cart', [ProductController::class, 'addToCart'])->name('add-to-cart');
+    Route::get('/cart', [ProductController::class, 'CartList'])->name('cart');
+    Route::get('/remove/{id}', [ProductController::class, 'RemoveCart'])->name('remove');
+
+    Route::get('/ordernow', [ProductController::class, 'OrderNow'])->name('order');
+    Route::post('/place-order', [ProductController::class, 'placeOrder'])->name('placeorder');
+
+    Route::get('/myorders', [ProductController::class, 'myOrders'])->name('my.orders');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [ProductController::class, 'profileWithOrders'])->name('profile');
+
+});
 
 
-Route::get('admin/customers', function () {
-    return view('admin.customers.index');
-})->name('admin.customers.index');
+Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function () {
+
+    // Route::get('/', fn () => view('admin.dashboard'))->name('dashboard');
+
+    // Route::get('/orders', fn () => view('admin.orders.index'))->name('orders.index');
+    Route::get('/customers', fn () => view('admin.customers.index'))->name('admin.customers.index');
+
+    Route::get('/analytics', fn () => view('admin.analytics.index'))->name('analytics.index');
+    Route::get('/settings', fn () => view('admin.settings.index'))->name('settings');
+
+    Route::get('/profile', fn () => view('admin.profile.index'))->name('admin.profile');
+
+    // ADMIN PRODUCTS
+    Route::get('/products', [AdminProductController::class, 'index'])->name('product.index');
+    Route::get('/products/create', [AdminProductController::class, 'create'])->name('product.create');
+    Route::post('/products', [AdminProductController::class, 'store'])->name('product.store');
+    Route::get('/products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('product.update');
+    Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.delete');
 
 
-    Route::get('analytics', function () {
-        return view('admin.analytics.index');
-    })->name('analytics.index');
+    // Order Route
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/', [AdminOrderController::class, 'dashboard'])->name('dashboard');
 
-  Route::get('settings', function () {
-        return view('admin.settings.index');
-    })->name('settings');
 
-    Route::get('/admin/profile', function () {
-    return view('admin.profile.index');
-})->name('admin.profile');
+    // Category Route
+// Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+//     Route::resource('categories', CategoryController::class);
+// });
+});
 
-Route::get('admin/product', [AdminProductController::class, 'index'])->name('product.index');
-Route::get('admin/create', [AdminProductController::class, 'create'])->name('product.create');
-Route::post('admin/products', [AdminProductController::class, 'store'])->name('product.store');
-Route::get('products/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+
+
+Route::middleware('auth')->get('logout', [LoginController::class, 'logout'])->name('logout');

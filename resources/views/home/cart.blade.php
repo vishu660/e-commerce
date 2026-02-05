@@ -6,20 +6,33 @@
 
   <div class="row">
     <div class="col-md-8">
-     @foreach ($cartItems as $item)
-  <div class="cart-item d-flex align-items-center mb-3">
-    <a href="{{ route('products.detail', $item->product->id) }}" class="d-flex align-items-center text-decoration-none text-dark w-100">
-      <img src="{{ asset($item->product->gallery) }}" class="product-img me-3" width="80" height="80" alt="Product" />
-      <div class="flex-grow-1">
-        <h6 class="mb-1">{{ $item->product->name }}</h6>
-        <p class="text-muted mb-1">₹{{ $item->product->price }}</p>
+    @foreach ($cartItems as $item)
+    @if($item->product)
+
+    <div class="cart-item d-flex align-items-center mb-3">
+      <a href="{{ route('products.detail', $item->product->id) }}"
+        class="d-flex align-items-center text-decoration-none text-dark w-100">
+
+        <img src="{{ asset('storage/'.$item->product->gallery) }}"
+            class="product-img me-3"
+            width="80" height="80"
+            alt="{{ $item->product->name }}" />
+
+        <div class="flex-grow-1">
+          <h6 class="mb-1">{{ $item->product->name }}</h6>
+          <p class="text-muted mb-1">₹{{ $item->product->price }}</p>
+        </div>
+      </a>
+
+      <div class="d-flex align-items-center ms-3">
+        <input type="number" class="form-control form-control-sm w-50"
+              value="{{ $item->quantity ?? 1 }}" min="1"/>
+        <a href="{{ route('remove', $item->id) }}"
+          class="btn btn-outline-danger btn-sm ms-2">Remove</a>
       </div>
-    </a>
-    <div class="d-flex align-items-center ms-3">
-      <input type="number" class="form-control form-control-sm w-50" value="1" min="1"/>
-      <a href="{{ route('remove', $item->id) }}" class="btn btn-outline-danger btn-sm ms-2">Remove</a>
     </div>
-  </div>
+
+    @endif
 @endforeach
 
     </div>

@@ -129,7 +129,9 @@
     <a href="{{ route('product.index') }}">
         <i class="fas fa-box me-2"></i> Products
     </a>
-
+    {{--<a href="{{ route('admin.categories.index') }}">
+    <i class="fas fa-folder-open me-2"></i> Category
+    </a>--}}
     <a href="{{ route('admin.customers.index') }}">
         <i class="fas fa-users me-2"></i> Customers
     </a>
@@ -170,7 +172,7 @@
                 </li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                    <a class="dropdown-item text-danger" href="#">
+                    <a class="dropdown-item text-danger" href="{{route('logout')}}">
                         <i class="fas fa-sign-out-alt me-2"></i> Logout
                     </a>
                 </li>

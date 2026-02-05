@@ -21,7 +21,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Total Orders</h6>
-                    <h3>245</h3>
+                    <h3>{{$totalorder}}</h3>
                 </div>
             </div>
         </div>
@@ -74,66 +74,47 @@
                     </thead>
 
                     <tbody>
+                        @foreach($order as $orders)
                         <tr>
-                            <td>#ORD-1001</td>
+                            <td>#ORD-{{ 1000 + $orders->id }}</td>
+
                             <td>
-                                <strong>Rahul Sharma</strong><br>
-                                <small class="text-muted">rahul@gmail.com</small>
+                                <strong>{{ $orders->user->name ?? 'Guest' }}</strong><br>
+                                <small class="text-muted">{{ $orders->user->email ?? '-' }}</small>
                             </td>
-                            <td>3 Items</td>
-                            <td>₹4,299</td>
-                            <td><span class="badge bg-success">Paid</span></td>
-                            <td><span class="badge bg-warning">Pending</span></td>
-                            <td>25 Jan 2026</td>
+
+                            <td>{{ $orders->product ? '1 Item' : '0 Item' }}</td>
+
+                            <td>₹{{ $orders->product->price ?? 0 }}</td>
+
+                            <td>
+                                @if($orders->payment_status == 'paid')
+                                    <span class="badge bg-success">Paid</span>
+                                @else
+                                    <span class="badge bg-danger">Pending</span>
+                                @endif
+                            </td>
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    {{ ucfirst($orders->status) }}
+                                </span>
+                            </td>
+                            <td>{{ $orders->created_at->format('d M Y') }}</td>
                             <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
+                                <a href="#" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-success">
+                                </a>
+
+                                <a href="#" class="btn btn-sm btn-outline-success">
                                     <i class="fas fa-check"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
+                                </a>
+
+                                <a href="#" class="btn btn-sm btn-outline-danger">
                                     <i class="fas fa-times"></i>
-                                </button>
+                                </a>
                             </td>
                         </tr>
-
-                        <tr>
-                            <td>#ORD-1002</td>
-                            <td>
-                                <strong>Neha Verma</strong><br>
-                                <small class="text-muted">neha@gmail.com</small>
-                            </td>
-                            <td>1 Item</td>
-                            <td>₹1,29,999</td>
-                            <td><span class="badge bg-success">Paid</span></td>
-                            <td><span class="badge bg-success">Completed</span></td>
-                            <td>24 Jan 2026</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>#ORD-1003</td>
-                            <td>
-                                <strong>Amit Kumar</strong><br>
-                                <small class="text-muted">amit@gmail.com</small>
-                            </td>
-                            <td>2 Items</td>
-                            <td>₹5,499</td>
-                            <td><span class="badge bg-danger">Unpaid</span></td>
-                            <td><span class="badge bg-danger">Cancelled</span></td>
-                            <td>23 Jan 2026</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-
+                        @endforeach
                     </tbody>
                 </table>
             </div>

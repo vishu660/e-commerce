@@ -13,7 +13,6 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -23,7 +22,20 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');  
+
+            $user = Auth::user();
+
+            
+            if ($user->role === 'ROLE_ADMIN') {
+                return redirect()->route('dashboard'); 
+            }
+
+            if ($user->role === 'ROLE_VENDOR') {
+                return redirect('/vendor');
+            }
+
+           
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
@@ -31,12 +43,12 @@ class LoginController extends Controller
         ])->onlyInput('email');
     }
 
-  
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/');
     }
 }

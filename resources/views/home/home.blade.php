@@ -65,7 +65,7 @@
           </div>
         </div>
         
-        <a href="{{ route('product3') }}" class="text-decoration-none">see more</a>
+        <a href="#" class="text-decoration-none">see more</a>
         <div class="product-title">Shoe Rack</div>
         <div class="product-tag">Min. 50% Off</div>
       </div>
@@ -96,7 +96,7 @@
 
            </div>
         </div>
-                <a href="{{ route('product4') }}" class="text-decoration-none">see more</a>
+                <a href="#" class="text-decoration-none">see more</a>
 
         <div class="product-title">Shoe Rack</div>
         <div class="product-tag">Min. 50% Off</div>
@@ -124,7 +124,7 @@
              <p>Fashion jewellery</p>
           </div>
         </div>
-                <a href="{{ route('product5') }}" class="text-decoration-none">see more</a>
+                <a href="#" class="text-decoration-none">see more</a>
 
         <div class="product-title">Shoe Rack</div>
         <div class="product-tag">Min. 50% Off</div>
@@ -161,7 +161,7 @@
              <p>Under ₹299 | Wallpapers</p>
           </div>
         </div>
-                <a href="{{ route('product6') }}" class="text-decoration-none">see more</a>
+                <a href="#" class="text-decoration-none">see more</a>
 
         <div class="product-title">Shoe Rack</div>
         <div class="product-tag">Min. 50% Off</div>
@@ -188,7 +188,7 @@
              <p>Min. 50% off | outdoor games</p>
           </div>
         </div>
-                <a href="{{ route('product7') }}" class="text-decoration-none">see more</a>
+                <a href="#" class="text-decoration-none">see more</a>
 
         <div class="product-title">Shoe Rack</div>
         <div class="product-tag">Min. 50% Off</div>
@@ -216,7 +216,7 @@
              <p>Up to 60% off | Home decor</p>
           </div>
         </div>
-                <a href="{{ route('product8') }}" class="text-decoration-none">see more</a>
+                <a href="#" class="text-decoration-none">see more</a>
 
         <div class="product-title">Shoe Rack</div>
         <div class="product-tag">Min. 50% Off</div>
@@ -230,7 +230,7 @@
 {{-- second slider  --}}
 
 <div class="container my-4 ">
-          <a href="{{ route('product9') }}" class="text-decoration-none">-
+          <a href="#" class="text-decoration-none">-
 
 
   <h4 class="mb-3 text-dark">Up to 70% off | Kitchen essentials from Small Businesses</h4>
@@ -335,7 +335,7 @@
         <h5>Starting ₹99 | Start your fitness journey</h5>
         <img src="{{ asset('product_img/p01.webp') }}" alt="Product" class="product-image my-4">
 
-        <a href="{{ route('product10') }}" class="d-block mt-2 text-primary">See all offers</a>
+        <a href="#" class="d-block mt-2 text-primary">See all offers</a>
       </div>
     </div>
 
@@ -359,7 +359,7 @@
             <img src="{{ asset('product_img/p09.webp') }}" class="product-image">
           </div>
         </div>
-          <a href="{{ route('product1') }}" class="text-decoration-none">See more</a>
+          <a href="#" class="text-decoration-none">See more</a>
       </div>
     </div>
 
@@ -368,14 +368,14 @@
       <div class="product-card">
         <h5>Starting ₹199 | Top rated toys</h5>
         <img src="{{ asset('product_img/p02.webp') }}" class="product-image mb-2">
-        <p class="mb-1">SHINETOY® 40 Pcs Wooden Russian Blocks Puzzles...</p>
+        <p class="mb-1">SHINETOY®️ 40 Pcs Wooden Russian Blocks Puzzles...</p>
         <div class="price">₹195.00 <span class="mrp">₹999.00</span></div>
         <div class="d-flex gap-2 mt-2">
           <img src="{{ asset('product_img/p03.webp') }}" class="thumbnail-img">
           <img src="{{ asset('product_img/p04.webp') }}" class="thumbnail-img">
           <img src="{{ asset('product_img/p05.webp') }}" class="thumbnail-img">
         </div>
-       <a href="{{ route('product2') }}" class="text-decoration-none ">See more</a>
+       <a href="#" class="text-decoration-none ">See more</a>
 
       </div>
     </div>
@@ -392,25 +392,11 @@
           <img src="{{ asset('product_img/pp3.webp') }}" class="thumbnail-img">
           <img src="{{ asset('product_img/pp4.webp') }}" class="thumbnail-img">
         </div>
-               <a href="{{ route('product11') }}" class="text-decoration-none ">See more</a>
+               <a href="#" class="text-decoration-none ">See more</a>
 
       </div>
     </div>
 
   </div>
 </div>
- 
-
-
-
-
 @endsection
-
-
-
-{{-- @foreach($products as $product)
-        <h4>{{ $product->name }}</h4>
-        <p>₹{{ $product->price }}</p>
-        <img src="{{ asset($product->gallery) }}" alt="{{ $product->name }}" width="150">
-        <p>{{ $product->description }}</p>
-    @endforeach --}}

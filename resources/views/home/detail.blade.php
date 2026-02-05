@@ -5,11 +5,13 @@
   <div class="row">
     <!-- Product Image -->
     <div class="col-md-6 text-center">
-      <img src="{{ asset($product->gallery) }}" alt="" class="product_img" />
+    @if($product->gallery)
+      <img src="{{ asset('storage/'.$product->gallery) }}" class="card-img-top" alt="{{ $product->name }}" style="width: 50%;">
+    @endif
       <div class="mt-5">
-        <img src="{{ asset($product->gallery) }}" width="60" class="me-2 border border-secondary p-2"/>
-        <img src="{{ asset($product->gallery) }}" width="60" class="me-2 border border-secondary p-2"/>
-        <img src="{{ asset($product->gallery) }}" width="60" class="me-2 border border-secondary p-2"/>
+        <img src="{{ asset('storage/'.$product->gallery) }}" width="60" class="me-2 border border-secondary p-2"/>
+        <img src="{{ asset('storage/'.$product->gallery) }}" width="60" class="me-2 border border-secondary p-2"/>
+        <img src="{{ asset('storage/'.$product->gallery) }}" width="60" class="me-2 border border-secondary p-2"/>
       </div>
     </div>
 

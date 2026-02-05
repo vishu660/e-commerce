@@ -22,13 +22,12 @@
                 <div class="card-header bg-success text-white">My Orders</div>
                 <div class="card-body">
                     @if($orders->isEmpty())
-                        <p>आपके द्वारा अभी तक कोई ऑर्डर नहीं किया गया है।</p>
+                        <p>You have not placed any orders yet.</p>
                     @else
                         @foreach($orders as $order)
                             <div class="row mb-3 border-bottom pb-2">
                                 <div class="col-md-3">
-                                    <img src="{{ asset($order->product->gallery) }}" class="img-fluid rounded" alt="Product Image">
-                                </div>
+                                <img src="{{ asset('storage/'.$order->product->gallery) }}" class="img-fluid rounded" alt="Product Image">                                </div>
                                 <div class="col-md-9">
                                     <h5>{{ $order->product->name }}</h5>
                                     <p class="mb-1">Price: ₹{{ $order->product->price }}</p>

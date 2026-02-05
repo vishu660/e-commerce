@@ -1,9 +1,8 @@
-<form action="{{ $product->id ?? route('product.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ isset($product) ? route('product.update', $product->id) : route('product.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @if(isset($product))
         @method('PUT')
     @endif
-
     <div class="mb-3">
         <label>Product Name</label>
         <input type="text" name="name" value="{{ $product->name ?? '' }}" class="form-control" required>
