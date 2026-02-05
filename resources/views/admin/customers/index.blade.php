@@ -82,7 +82,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->email }}</td>
-                                        <td>{{ $customer->phone ?? '-' }}</td>
+                                        <td>{{ $customer->mobile ?? '-' }}</td>
                                         <td>{{ $customer->total_orders }}</td>
                                         <td>₹{{ number_format($customer->total_spent, 2) }}</td>
                                         <td>

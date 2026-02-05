@@ -10,37 +10,40 @@ class CustomerController extends Controller
 {
     public function customers()
     {
-        // Get customer statistics
+        // Total customers
         $totalCustomers = User::where('role', 'ROLE_CUSTOMER')->count();
-        $activeCustomers = User::where('role', 'ROLE_CUSTOMER')->where('status', 1)->count();
-        $inactiveCustomers = User::where('role', 'ROLE_CUSTOMER')->where('status', 0)->count();
+
+        // Since status column users table me nahi hai
+        $activeCustomers = $totalCustomers;
+        $inactiveCustomers = 0;
+
+        // New customers this month
         $newThisMonth = User::where('role', 'ROLE_CUSTOMER')
-            ->whereYear('created_at', date('Y'))
-            ->whereMonth('created_at', date('m'))
+            ->whereYear('created_at', now()->year)
+            ->whereMonth('created_at', now()->month)
             ->count();
 
-        // Get customers with their order data
+        // Customers with orders & total spent (from products table)
         $customers = User::leftJoin('orders', 'users.id', '=', 'orders.user_id')
+            ->leftJoin('products', 'orders.product_id', '=', 'products.id')
             ->where('users.role', 'ROLE_CUSTOMER')
             ->select(
                 'users.id',
                 'users.name',
                 'users.email',
-                'users.phone',
-                'users.status',
+                'users.mobile',
                 'users.created_at',
-                DB::raw('COUNT(orders.id) as total_orders'),
-                DB::raw('COALESCE(SUM(orders.total_amount), 0) as total_spent')
+                DB::raw('COUNT(DISTINCT orders.id) as total_orders'),
+                DB::raw('COALESCE(SUM(products.price), 0) as total_spent')
             )
             ->groupBy(
                 'users.id',
                 'users.name',
                 'users.email',
-                'users.phone',
-                'users.status',
+                'users.mobile',
                 'users.created_at'
             )
-            ->orderBy('users.created_at', 'DESC')
+            ->orderByDesc('users.created_at')
             ->get();
 
         return view('admin.customers.index', compact(

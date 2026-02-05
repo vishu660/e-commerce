@@ -10,6 +10,8 @@ use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\admin\OrderController as AdminOrderController;
 use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\CustomerController;
+
 
 Route::get('/', fn () => view('home.home'))->name('home');
 Route::get('/about', fn () => view('home.about'))->name('about');
@@ -49,7 +51,7 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
     // Route::get('/', fn () => view('admin.dashboard'))->name('dashboard');
 
     // Route::get('/orders', fn () => view('admin.orders.index'))->name('orders.index');
-    Route::get('/customers', fn () => view('admin.customers.index'))->name('admin.customers.index');
+    // Route::get('/customers', fn () => view('admin.customers.index'))->name('admin.customers.index');
 
     Route::get('/analytics', fn () => view('admin.analytics.index'))->name('analytics.index');
     Route::get('/settings', fn () => view('admin.settings.index'))->name('settings');
@@ -81,7 +83,9 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings');
     Route::post('/settings', [SettingController::class, 'store'])->name('admin.settings.store');
-    
+
+    Route::get('/customers', [CustomerController::class, 'customers'])
+    ->name('admin.customers.index');
     
 });
 
