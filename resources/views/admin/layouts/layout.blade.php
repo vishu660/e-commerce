@@ -129,9 +129,9 @@
     <a href="{{ route('product.index') }}">
         <i class="fas fa-box me-2"></i> Products
     </a>
-    {{--<a href="{{ route('admin.categories.index') }}">
-    <i class="fas fa-folder-open me-2"></i> Category
-    </a>--}}
+    <a href="{{ route('categories.index') }}">
+    <i class="fas fa-folder-open me-2"></i> Categories
+    </a>
     <a href="{{ route('admin.customers.index') }}">
         <i class="fas fa-users me-2"></i> Customers
     </a>

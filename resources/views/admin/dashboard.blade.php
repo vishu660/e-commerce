@@ -99,7 +99,7 @@
                                 </td>
 
                                 <td>
-                                    ₹{{ $orders->product->price ?? 0 }}
+                                    ₹{{ $orders->total_price }}
                                 </td>
 
                                 <td>

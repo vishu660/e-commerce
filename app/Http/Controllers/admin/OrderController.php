@@ -12,33 +12,59 @@ class OrderController extends Controller
 {
     //
    public function index()
-    {
-        $order = Order::with(['product', 'user'])
-            ->select('user_id', 'created_at', 'payment_status', 'status')
-            ->selectRaw('COUNT(*) as items_count')
-            ->groupBy('user_id', 'created_at', 'payment_status', 'status')
-            ->latest()
-            ->get();
+        {
+            $order = Order::join('products', 'orders.product_id', '=', 'products.id')
+                ->join('users', 'orders.user_id', '=', 'users.id')
+                ->select(
+                    'orders.user_id',
+                    'users.name as user_name',
+                    'users.email',
+                    'orders.created_at',
+                    'orders.payment_status',
+                    'orders.status'
+                )
+                ->selectRaw('COUNT(orders.id) as items_count')
+                ->selectRaw('SUM(products.price) as total_price')
+                ->groupBy(
+                    'orders.user_id',
+                    'users.name',
+                    'users.email',
+                    'orders.created_at',
+                    'orders.payment_status',
+                    'orders.status'
+                )
+                ->latest()
+                ->get();
+
             $totalorder = Order::count();
 
-        return view('admin.orders.index', compact('order', 'totalorder'));
-    }
+            return view('admin.orders.index', compact('order', 'totalorder'));
+        }
 
-   public function dashboard()
-    {
-        $order = Order::with(['product', 'user'])
-            ->select('user_id', 'created_at', 'payment_status', 'status','price')
-            ->selectRaw('COUNT(*) as items_count')
-            ->groupBy('user_id', 'created_at', 'payment_status', 'status','price')
-            ->latest()
-            ->limit(5) 
-            ->get();
+ public function dashboard()
+            {
+                $order = Order::join('products', 'orders.product_id', '=', 'products.id')
+                    ->select(
+                        'orders.user_id',
+                        'orders.created_at',
+                        'orders.payment_status',
+                        'orders.status'
+                    )
+                    ->selectRaw('COUNT(*) as items_count')
+                    ->selectRaw('SUM(products.price) as total_price')
+                    ->groupBy(
+                        'orders.user_id',
+                        'orders.created_at',
+                        'orders.payment_status',
+                        'orders.status'
+                    )
+                    ->latest()
+                    ->limit(5)
+                    ->get();
 
-        $totalorder = Order::count();
+                $totalorder = Order::count();
 
-        return view('admin.dashboard', compact('order', 'totalorder'));
-    }
-
-
+                return view('admin.dashboard', compact('order', 'totalorder'));
+            }
 
 }

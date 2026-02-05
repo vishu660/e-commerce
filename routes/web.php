@@ -70,9 +70,7 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
 
 
     // Category Route
-// Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-//     Route::resource('categories', CategoryController::class);
-// });
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
 });
 
 

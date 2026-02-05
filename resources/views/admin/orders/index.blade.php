@@ -83,9 +83,9 @@
                                 <small class="text-muted">{{ $orders->user->email ?? '-' }}</small>
                             </td>
 
-                            <td>{{ $orders->product ? '1 Item' : '0 Item' }}</td>
+                            <td>{{ $orders->items_count }} Item{{ $orders->items_count > 1 ? 's' : '' }}</td>
 
-                            <td>₹{{ $orders->product->price ?? 0 }}</td>
+                            <td>₹{{ number_format($orders->total_price, 2) }}</td>
 
                             <td>
                                 @if($orders->payment_status == 'paid')
