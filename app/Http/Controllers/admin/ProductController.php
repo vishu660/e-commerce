@@ -29,7 +29,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'category' => 'required|string',
+            'category_id' => 'required|string',
             'discount' => 'nullable|numeric',
             'description' => 'nullable|string',
             'gallery' => 'nullable|image|max:2000',
@@ -61,7 +61,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'name'        => 'required|string',
             'price'       => 'required|numeric',
-            'category'    => 'required|string',
+            'category_id'    => 'required|string',
             'discount'    => 'nullable|numeric',
             'description' => 'nullable|string',
             'gallery'     => 'nullable|image|max:2000',
