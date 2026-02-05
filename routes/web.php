@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\admin\OrderController as AdminOrderController;
 use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\admin\CustomerController as AdminCustomerController;
 
 Route::get('/', fn () => view('home.home'))->name('home');
 Route::get('/about', fn () => view('home.about'))->name('about');
@@ -71,6 +72,11 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
 
     // Category Route
     Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+
+    // Customer Route
+Route::get('/admin/customers', [AdminCustomerController::class, 'customers'])
+    ->name('admin.customers');
+
 });
 
 

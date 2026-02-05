@@ -21,7 +21,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Total Customers</h6>
-                    <h3>1,284</h3>
+                    <h3>{{ $totalCustomers ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Active Customers</h6>
-                    <h3 class="text-success">1,050</h3>
+                    <h3 class="text-success">{{ $activeCustomers ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">Inactive Customers</h6>
-                    <h3 class="text-danger">234</h3>
+                    <h3 class="text-danger">{{ $inactiveCustomers ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="card border-0 shadow-sm">
                 <div class="card-body">
                     <h6 class="text-muted">New This Month</h6>
-                    <h3 class="text-primary">86</h3>
+                    <h3 class="text-primary">{{ $newThisMonth ?? 0 }}</h3>
                 </div>
             </div>
         </div>
@@ -75,73 +75,51 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="https://i.pravatar.cc/40?img=1" class="rounded-circle me-2">
-                                <strong>Rahul Sharma</strong>
-                            </td>
-                            <td>rahul@gmail.com</td>
-                            <td>+91 98765 43210</td>
-                            <td>12</td>
-                            <td>₹2,45,000</td>
-                            <td><span class="badge bg-success">Active</span></td>
-                            <td>12 Jan 2026</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-warning">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-ban"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <img src="https://i.pravatar.cc/40?img=2" class="rounded-circle me-2">
-                                <strong>Neha Verma</strong>
-                            </td>
-                            <td>neha@gmail.com</td>
-                            <td>+91 91234 56789</td>
-                            <td>5</td>
-                            <td>₹89,999</td>
-                            <td><span class="badge bg-success">Active</span></td>
-                            <td>08 Jan 2026</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn btn-sm btn-outline-warning">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>
-                                <img src="https://i.pravatar.cc/40?img=3" class="rounded-circle me-2">
-                                <strong>Amit Kumar</strong>
-                            </td>
-                            <td>amit@gmail.com</td>
-                            <td>+91 99887 66554</td>
-                            <td>1</td>
-                            <td>₹5,499</td>
-                            <td><span class="badge bg-danger">Inactive</span></td>
-                            <td>30 Dec 2025</td>
-                            <td class="text-end">
-                                <button class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-
+                        @isset($customers)
+                            @if($customers->count())
+                                @foreach($customers as $index => $customer)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $customer->name }}</td>
+                                        <td>{{ $customer->email }}</td>
+                                        <td>{{ $customer->phone ?? '-' }}</td>
+                                        <td>{{ $customer->total_orders }}</td>
+                                        <td>₹{{ number_format($customer->total_spent, 2) }}</td>
+                                        <td>
+                                            <span class="badge {{ $customer->status ? 'bg-success' : 'bg-danger' }}">
+                                                {{ $customer->status ? 'Active' : 'Inactive' }}
+                                            </span>
+                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($customer->created_at)->format('d M Y') }}</td>
+                                        <td class="text-end">
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="#" class="btn btn-outline-primary" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-success" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <button class="btn btn-outline-danger" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="9" class="text-center">No customers found</td>
+                                </tr>
+                            @endif
+                        @else
+                            <tr>
+                                <td colspan="9" class="text-center text-danger">
+                                    Customers data not passed from controller
+                                </td>
+                            </tr>
+                        @endisset
                     </tbody>
+
                 </table>
             </div>
 
