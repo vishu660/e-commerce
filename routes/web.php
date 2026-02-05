@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\admin\ProductController as AdminProductController;
 use App\Http\Controllers\admin\OrderController as AdminOrderController;
 use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\SettingController;
 
 Route::get('/', fn () => view('home.home'))->name('home');
 Route::get('/about', fn () => view('home.about'))->name('about');
@@ -70,7 +71,18 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
 
 
     // Category Route
-    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('admin.categories.create');
+    Route::POST('/categories', [AdminCategoryController::class, 'store'])->name('admin.categories.store');
+    Route::get('/categories/{id}/edit', [AdminCategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::PUT('/categories{id}', [AdminCategoryController::class, 'update'])->name('admin.categories.update');
+    Route::DELETE('/categories{id}', [AdminCategoryController::class, 'destroy'])->name('admin.categories.destroy');
+
+
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+    Route::post('/settings', [SettingController::class, 'store'])->name('admin.settings.store');
+    
+    
 });
 
 

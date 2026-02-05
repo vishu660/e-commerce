@@ -129,7 +129,7 @@
     <a href="{{ route('product.index') }}">
         <i class="fas fa-box me-2"></i> Products
     </a>
-    <a href="{{ route('categories.index') }}">
+    <a href="{{ route('admin.categories.index') }}">
     <i class="fas fa-folder-open me-2"></i> Categories
     </a>
     <a href="{{ route('admin.customers.index') }}">
@@ -185,6 +185,7 @@
         @yield('content')
     </div>
 </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>

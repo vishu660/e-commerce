@@ -16,5 +16,10 @@ class Product extends Model
     return $this->hasMany(Order::class, 'product_id');
 }
 
+public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
 }
 

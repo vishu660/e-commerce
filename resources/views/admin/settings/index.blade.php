@@ -56,49 +56,51 @@
                 </div>
 
                 <div class="card-body">
-                    <form>
+                    <form method="POST" action="{{ route('admin.settings.store') }}">
+                    @csrf
 
-                        <div class="mb-3">
-                            <label class="form-label">Site Name</label>
-                            <input type="text" class="form-control" value="My E-Commerce Store">
-                        </div>
+                    <div class="mb-3">
+                        <label>Site Name</label>
+                        <input type="text" name="site_name" class="form-control"
+                            value="{{ $settings['site_name'] ?? '' }}">
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Admin Email</label>
-                            <input type="email" class="form-control" value="admin@example.com">
-                        </div>
+                    <div class="mb-3">
+                        <label>Admin Email</label>
+                        <input type="email" name="admin_email" class="form-control"
+                            value="{{ $settings['admin_email'] ?? '' }}">
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Currency</label>
-                            <select class="form-select">
-                                <option selected>INR (₹)</option>
-                                <option>USD ($)</option>
-                                <option>EUR (€)</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label>Currency</label>
+                        <select name="currency" class="form-select">
+                            <option value="INR" {{ ($settings['currency'] ?? '')=='INR'?'selected':'' }}>INR (₹)</option>
+                            <option value="USD" {{ ($settings['currency'] ?? '')=='USD'?'selected':'' }}>USD ($)</option>
+                        </select>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Timezone</label>
-                            <select class="form-select">
-                                <option selected>Asia/Kolkata</option>
-                                <option>UTC</option>
-                                <option>America/New_York</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label>Timezone</label>
+                        <select name="timezone" class="form-select">
+                            <option value="Asia/Kolkata">Asia/Kolkata</option>
+                            <option value="UTC">UTC</option>
+                        </select>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Maintenance Mode</label>
-                            <select class="form-select">
-                                <option>No</option>
-                                <option>Yes</option>
-                            </select>
-                        </div>
+                    <div class="mb-3">
+                        <label>Maintenance Mode</label>
+                        <select name="maintenance_mode" class="form-select">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
 
-                        <button type="button" class="btn btn-primary">
-                            <i class="fas fa-save me-1"></i> Save Settings
-                        </button>
-
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
                     </form>
+
+
                 </div>
             </div>
         </div>
@@ -145,24 +147,8 @@
         </div>
     </div>
 </div>
-<script>
-document.querySelectorAll('.open-setting-modal').forEach(item => {
-    item.addEventListener('click', function () {
 
-        // active class change
-        document.querySelectorAll('.list-group-item').forEach(el => el.classList.remove('active'));
-        this.classList.add('active');
 
-        // set modal title
-        const title = this.getAttribute('data-title');
-        document.getElementById('settingsModalTitle').innerText = title;
-
-        // open modal
-        const modal = new bootstrap.Modal(document.getElementById('settingsModal'));
-        modal.show();
-    });
-});
-</script>
 
 
 @endsection
