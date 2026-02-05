@@ -8,14 +8,22 @@
         <input type="text" name="name" value="{{ $product->name ?? '' }}" class="form-control" required>
     </div>
 
-    <div class="mb-3">
-        <label>Category</label>
-        <select name="category" class="form-select" required>
-            <option value="Mobile" {{ (isset($product) && $product->category=='Mobile') ? 'selected' : '' }}>Mobile</option>
-            <option value="Laptop" {{ (isset($product) && $product->category=='Laptop') ? 'selected' : '' }}>Laptop</option>
-            <option value="Accessories" {{ (isset($product) && $product->category=='Accessories') ? 'selected' : '' }}>Accessories</option>
-        </select>
-    </div>
+        <div class="mb-3">
+            <label>Category</label>
+
+            <select name="category" class="form-select" required>
+                <option value="">-- Select Category --</option>
+
+                @foreach($categories as $category)
+                    <option value="{{ $category->name }}"
+                        {{ old('category', $product->category ?? '') == $category->name ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+
+            </select>
+        </div>
+
 
     <div class="mb-3">
         <label>Price</label>

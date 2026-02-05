@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,9 +18,11 @@ class ProductController extends Controller
         return view('admin.products.index',compact('products','totalproducts'));
     }
 
-    public function create(){
-        return view('admin.products.create');
-    }
+            public function create()
+            {
+                $categories = Category::orderBy('name')->get();
+                return view('admin.products.create', compact('categories'));
+            }
 
     public function store(Request $request)
     {
@@ -46,10 +49,12 @@ class ProductController extends Controller
     }
 
 
-    public function edit(Product $product)
-    {
-        return view('admin.products.edit', compact('product'));
-    }
+            public function edit(Product $product)
+            {
+                $categories = Category::orderBy('name')->get();
+                return view('admin.products.edit', compact('product', 'categories'));
+            }
+
 
    public function update(Request $request, Product $product)
     {
