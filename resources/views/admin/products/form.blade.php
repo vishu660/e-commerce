@@ -8,21 +8,21 @@
         <input type="text" name="name" value="{{ $product->name ?? '' }}" class="form-control" required>
     </div>
 
-        <div class="mb-3">
-            <label>Category</label>
+            <div class="mb-3">
+                <label class="form-label">Category</label>
+                <select name="category_id" class="form-select" required>
+                    <option value="">Select Category</option>
 
-            <select name="category" class="form-select" required>
-                <option value="">-- Select Category --</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ old('category_id', optional($product)->category_id) == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
 
-                @foreach($categories as $category)
-                    <option value="{{ $category->name }}"
-                        {{ old('category', $product->category ?? '') == $category->name ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
-                @endforeach
+                </select>
+            </div>
 
-            </select>
-        </div>
 
 
     <div class="mb-3">

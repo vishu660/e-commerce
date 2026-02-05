@@ -91,7 +91,9 @@
                             <td>
                                 <strong>{{$product->name}}</strong><br>
                             </td>
-                            <td>{{$product->category}}</td>
+                            <td>
+                                    {{ $product->category->name ?? '-' }}
+                                </td>
                             <td>{{$product->price}}</td>
                             <td>{{$product->discount}}</td>
                             <td>{{$product->description}}</td>
