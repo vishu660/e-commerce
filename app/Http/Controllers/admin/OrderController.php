@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 class OrderController extends Controller
 {
@@ -66,5 +68,82 @@ class OrderController extends Controller
 
                 return view('admin.dashboard', compact('order', 'totalorder'));
             }
+
+
+    public function placeOrder(Request $request)
+            {
+                $total = auth()->user()->cartItems
+                    ->sum(fn($item) => $item->product->price);
+
+                $paymentId = null;
+                $paymentStatus = 'pending';
+
+                if ($request->payment_method === 'card') {
+
+                    Stripe::setApiKey(config('services.stripe.secret'));
+
+                    $charge = Charge::create([
+                        "amount" => $total * 100,
+                        "currency" => "inr",
+                        "source" => $request->stripeToken,
+                        "description" => "Order Payment"
+                    ]);
+
+                    $paymentId = $charge->id;
+                    $paymentStatus = 'paid';
+                }
+
+                Order::create([
+                    'user_id' => auth()->id(),
+                    'name' => $request->name,
+                    'address' => $request->address,
+                    'total_amount' => $total,
+                    'payment_method' => $request->payment_method,
+                    'payment_id' => $paymentId,
+                    'payment_status' => $paymentStatus,
+                ]);
+
+                auth()->user()->cartItems()->delete();
+
+                return redirect()->route('orders.success');
+                {
+                $total = auth()->user()->cartItems
+                    ->sum(fn($item) => $item->product->price);
+
+                $paymentId = null;
+                $paymentStatus = 'pending';
+
+                if ($request->payment_method === 'card') {
+
+                    Stripe::setApiKey(config('services.stripe.secret'));
+
+                    $charge = Charge::create([
+                        "amount" => $total * 100, // paisa
+                        "currency" => "inr",
+                        "source" => $request->stripeToken,
+                        "description" => "Order Payment"
+                    ]);
+
+                    $paymentId = $charge->id;
+                    $paymentStatus = 'paid';
+                }
+
+                // ORDER SAVE
+                Order::create([
+                    'user_id' => auth()->id(),
+                    'name' => $request->name,
+                    'address' => $request->address,
+                    'total_amount' => $total,
+                    'payment_method' => $request->payment_method,
+                    'payment_id' => $paymentId,
+                    'payment_status' => $paymentStatus,
+                ]);
+
+                // Cart clear
+                auth()->user()->cartItems()->delete();
+
+                return redirect()->route('orders.success');
+            }
+        }
 
 }

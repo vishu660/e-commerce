@@ -12,6 +12,42 @@ use App\Http\Controllers\admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
 
+/*
+|--------------------------------------------------------------------------
+| CUSTOMER ROUTES
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+
+    Route::post('/place-order', [OrderController::class, 'placeOrder'])
+        ->name('placeorder');
+
+    Route::get('/order-success', function () {
+        return 'ORDER SUCCESS';
+    })->name('orders.success');
+});
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'role:ROLE_ADMIN'])
+    ->prefix('admin')
+    ->group(function () {
+
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+        Route::post('/settings', [SettingController::class, 'store'])->name('admin.settings.store');
+
+        Route::get('/customers', [CustomerController::class, 'customers'])
+            ->name('admin.customers.index');
+
+        // ADMIN ORDER MANAGEMENT
+        Route::get('/orders', [AdminOrderController::class, 'index'])
+            ->name('admin.orders.index');
+});
+
+////////////////////////////////////////////////////////////////////////
 
 Route::get('/', fn () => view('home.home'))->name('home');
 Route::get('/about', fn () => view('home.about'))->name('about');
@@ -71,7 +107,6 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
     Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
     Route::get('/', [AdminOrderController::class, 'dashboard'])->name('dashboard');
 
-
     // Category Route
     Route::get('/categories', [AdminCategoryController::class, 'index'])->name('admin.categories.index');
     Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('admin.categories.create');
@@ -83,9 +118,7 @@ Route::middleware(['auth', 'role:ROLE_ADMIN'])->prefix('admin')->group(function 
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings');
     Route::post('/settings', [SettingController::class, 'store'])->name('admin.settings.store');
-
-    Route::get('/customers', [CustomerController::class, 'customers'])
-    ->name('admin.customers.index');
+    Route::get('/customers', [CustomerController::class, 'customers'])->name('admin.customers.index');
     
 });
 

@@ -3,61 +3,108 @@
 @section('content')
 <div class="container my-5">
     <div class="row">
-        <!-- Left Section: Shipping & Payment -->
+
+        <!-- LEFT -->
         <div class="col-md-7">
             <div class="card p-4 shadow-sm">
                 <h4 class="mb-4">Delivery Address</h4>
-                <form action="{{ route('placeorder') }}" method="POST">
+
+                <form action="{{ route('placeorder') }}" method="POST" id="checkout-form">
                     @csrf
 
                     <div class="mb-3">
-                        <label for="name" class="form-label fw-semibold">Full Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="John Doe" required>
+                        <label class="fw-semibold">Full Name</label>
+                        <input type="text" name="name" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address" class="form-label fw-semibold">Shipping Address</label>
-                        <textarea name="address" rows="4" class="form-control" placeholder="House No, Street, City, ZIP" required></textarea>
+                        <label class="fw-semibold">Shipping Address</label>
+                        <textarea name="address" class="form-control" rows="4" required></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="payment_method" class="form-label fw-semibold">Payment Method</label>
-                        <select name="payment_method" class="form-select" required>
+                        <label class="fw-semibold">Payment Method</label>
+                        <select name="payment_method" id="payment_method" class="form-select" required>
                             <option value="cod">Cash on Delivery</option>
                             <option value="card">Credit / Debit Card</option>
-                            <option value="upi">UPI</option>
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-warning w-100 fw-bold">Place your order</button>
+                    <!-- STRIPE CARD -->
+                    <div id="card-section" style="display:none;">
+                        <label class="fw-semibold">Card Details</label>
+                        <div id="card-element" class="form-control p-2"></div>
+                        <div id="card-errors" class="text-danger mt-2"></div>
+                    </div>
+
+                    <input type="hidden" name="stripeToken" id="stripeToken">
+
+                    <button class="btn btn-warning w-100 fw-bold mt-3">
+                        Place your order
+                    </button>
                 </form>
             </div>
         </div>
 
-        <!-- Right Section: Order Summary -->
+        <!-- RIGHT -->
         <div class="col-md-5">
-            <div class="card p-4 shadow-sm mb-3">
-                <h4 class="mb-3">Order Summary</h4>
+            <div class="card p-4 shadow-sm">
+                <h4>Order Summary</h4>
                 <p class="d-flex justify-content-between">
-                    <span>Subtotal</span>
-                    <span>₹{{ $cartItems->sum(fn($item) => $item->product->price) }}</span>
-                </p>
-                <p class="d-flex justify-content-between">
-                    <span>Shipping</span>
-                    <span class="text-success">Free</span>
-                </p>
-                <hr>
-                <h5 class="d-flex justify-content-between">
                     <span>Total</span>
-                    <span>₹{{ $cartItems->sum(fn($item) => $item->product->price) }}</span>
-                </h5>
-            </div>
-
-            <div class="text-muted small">
-                <p><i class="bi bi-shield-lock-fill"></i> Secure transaction</p>
-                <p><i class="bi bi-box"></i> Easy returns within 7 days</p>
+                    <span>₹{{ $cartItems->sum(fn($i) => $i->product->price) }}</span>
+                </p>
             </div>
         </div>
+
     </div>
 </div>
+
+<!-- STRIPE -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+const stripe = Stripe("{{ config('services.stripe.key') }}");
+const elements = stripe.elements();
+
+// 🔥 FIX: hidePostalCode removes ZIP issue
+const card = elements.create('card', {
+    hidePostalCode: true
+});
+
+card.mount('#card-element');
+
+// Live validation
+card.on('change', function(event) {
+    document.getElementById('card-errors').textContent =
+        event.error ? event.error.message : '';
+});
+
+const paymentMethod = document.getElementById('payment_method');
+const cardSection = document.getElementById('card-section');
+const form = document.getElementById('checkout-form');
+
+// Show / hide card
+paymentMethod.addEventListener('change', () => {
+    cardSection.style.display = paymentMethod.value === 'card' ? 'block' : 'none';
+});
+
+// Submit handling
+form.addEventListener('submit', async function(e) {
+
+    if (paymentMethod.value === 'card') {
+        e.preventDefault();
+
+        const { token, error } = await stripe.createToken(card);
+
+        if (error) {
+            document.getElementById('card-errors').textContent = error.message;
+            return;
+        }
+
+        document.getElementById('stripeToken').value = token.id;
+        form.submit();
+    }
+});
+</script>
 @endsection

@@ -43,7 +43,7 @@ public function show($id)
 {
     $product = Product::findOrFail($id);  
 
-    $relatedProducts = Product::where('category', $product->category)
+    $relatedProducts = Product::where('category_id', $product->category)
                               ->where('id', '!=', $id)
                               ->take(4)
                               ->get();

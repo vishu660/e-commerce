@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -19,21 +20,20 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|unique:categories,name',
-            'slug' => 'required|unique:categories,slug'
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|unique:categories,name',
+    ]);
 
-        Category::create([
-            'name' => $request->name,
-            'slug' => $request->slug,   
-        ]);
+    Category::create([
+        'name' => $request->name,
+        'slug' => Str::slug($request->name),
+    ]);
 
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Category created successfully');
-    }
+    return redirect()->route('admin.categories.index')
+        ->with('success', 'Category created successfully');
+}
 
     public function edit($id)
     {

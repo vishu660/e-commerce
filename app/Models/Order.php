@@ -14,7 +14,6 @@ class Order extends Model
     use HasFactory;
 
 
-    // ✅ Add this relationship method
     public function product()
     {
         return $this->belongsTo(Product::class);
